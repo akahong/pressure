@@ -1,247 +1,250 @@
-ΪʲôҪ��չѹ������
-��߲�Ʒ���ȶ���
-ͦ�߲�Ʒ��������
+为什么要开展压力测试
+提高产品的稳定性
+挺高产品的留存率
 
-ʲôʱ��չѹ������
-���ֹ��ܲ���ͨ����
-�°���ҹ�����
+什么时候开展压力测试
+首轮功能测试通过后
+下班后的夜间进行
 
-ѹ�����Թ��ߣ�Monkey������α����û��¼��Ĺ���
+压力测试工具－Monkey：发送伪随机用户事件的工具
 
-��MonkeyͨѶ�Ĺ��ߣ�ADB��Android Debug Bridge:��׿�����ţ�
+与Monkey通讯的工具－ADB（Android Debug Bridge:安卓调试桥）
 
-ʲô��MonkeyScript
-MonkeyScript��һ����Ա�Monkeyʶ��������
-MonkeyScript��������ظ��̶��Ĳ���
+什么是MonkeyScript
+MonkeyScript是一组可以被Monkey识别的命令集合
+MonkeyScript可以完成重复固定的操作
 
-ʲô��MonkeyRunner
-MonkeyRunner�ṩһϵ�е�API
-MonkeyRunner�������ģ���¼�����ͼ����
+什么是MonkeyRunner
+MonkeyRunner提供一系列的API
+MonkeyRunner可以完成模拟事件及截图操作
 
-Monkey��MonkeyRunner������
-Monkey����adb shell�У������û��Ļ�ϵͳ��α����¼�
-MonkeyRunner��ͨ��api�����ض�������¼������豸
+Monkey和MonkeyRunner的区别
+Monkey：在adb shell中，生成用户的或系统的伪随机事件
+MonkeyRunner：通过api定义特定命令和事件控制设备
 
-MonkeyRunner������api
-MonkeyRunner:���������豸��ģ����
-MonkeyDevice:�ṩ��װ��ж��Ӧ�ã�����ģ���¼�
-MokeyImage:���ͼ�񱣴棬���ԱȵĲ���
+MonkeyRunner的三大api
+MonkeyRunner:用来连接设备或模拟器
+MonkeyDevice:提供安装、卸载应用，发送模拟事件
+MokeyImage:完成图像保存，及对比的操作
 
-MonkeyRunner�Ĳ�������
-���豸����
-�����Բ���
-�ع����
+MonkeyRunner的测试类型
+多设备控制
+功能性测试
+回归测试
 
-ѹ�����Խ����Ҫ��ע�����������
-1��crash��������Ӧ�ó�����ʹ�ù����У��������˳�
-2��ANR��Application Not Responding��
+压力测试结果主要关注以下两种情况
+1、crash：崩溃，应用程序在使用过程中，非正常退出
+2、ANR（Application Not Responding）
 
 
-���
+命令：
 
-�����豸
+连接设备
 adb devices
 
-������İ���װ���ֻ�
+将被测的包安装进手机
 adb install package.apk
 
-����ѹ��ָ��
-adb shell monkey 1000��monkey���1000��ָ�
+发送压测指令
+adb shell monkey 1000（monkey完成1000个指令）
 
-��ȡapp����
-adb logcat|grep START (windows��grep����Findstr)
+获取app包名
+adb logcat|grep START (windows将grep换成Findstr)
 
-��ָ���İ���ѹ��
+给指定的包打压力
 adb shell monkey -p package 100
 
-�鿴�ֹ����Թ����е�ANR��Ϣ
-�����ֻ���adb shell
-�����ֻ�andĿ¼��cd /data/anr/
-�鿴Ŀ¼�µ��ļ���ls
-�鿴ĳһ�ļ������Ϣ��more �ļ���
-�˳�more���command+c
-�˳�monkey��exit
+查看手工测试过程中的ANR信息
+进入手机：adb shell
+进入手机and目录：cd /data/anr/
+查看目录下的文件：ls
+查看某一文件里的信息：more 文件名
+退出more命令：command+c
+退出monkey：exit
 
-����ѹ������в鿴anr��Ϣ
-�����ֻ���adb shell
-�����ֻ�andĿ¼��cd /data/anr/
-�鿴traces.tet�е���Ϣ��ll traces.tet
-
-
-
-1��-help
-
-���ã��г��򵥵��÷���
-
-����adb shell monkey -help
+命令压测过程中查看anr信息
+进入手机：adb shell
+进入手机and目录：cd /data/anr/
+查看traces.tet中的信息：ll traces.tet
 
 
-2��-v
 
-���ã��������ϵ�ÿһ��-v�������ӷ�����Ϣ����ϸ����
+1、-help
 
-Level0��Ĭ�ϣ�������������������ɺ����ս����ֻ�ṩ���ٵ���Ϣ��
+作用：列出简单的用法。
 
-Level1���ṩ�˽�Ϊ��ϸ�Ĳ�����Ϣ����������͵�Activity���¼���Ϣ��
-
-Level2���ṩ�˸����������Ϣ���������ѡ�л�δѡ�е�Activity��Ϣ��
-
-����adb shell monkey -v 10
+例：adb shell monkey -help
 
 
-�����¼�
+2、-v
+
+作用：命令行上的每一个-v都将增加反馈信息的详细级别。
+
+Level0（默认），除了启动、测试完成和最终结果外只提供较少的信息。
+
+Level1，提供了较为详细的测试信息，如逐个发送到Activity的事件信息。
+
+Level2，提供了更多的设置信息，如测试中选中或未选中的Activity信息。
+
+例：adb shell monkey -v 10
 
 
-1��-s <seed>
+二、事件
 
-���ã�α�������������seedֵ���������ͬ��seedֵ�ٴ�����monkey����������ͬ���¼����С�
 
-����adb shell monkey -s 12345 -v 10
+1、-s <seed>
+
+作用：伪随机数生成器的seed值。如果用相同的seed值再次运行monkey，将生成相同的事件序列。
+
+例：adb shell monkey -s 12345 -v 10
    add shell monkey -p package -s 50 100
 
 
 
-2��--throttle <milliseconds>
+2、--throttle <milliseconds>
 
-���ã����¼�֮�����̶���ʱ�䣨���룩�ӳ٣������ʹ���������������Monkey�������ٶȣ�����㲻ָ��������������¼�֮�佫û���ӳ٣��¼����������ٶ����ɡ�
+作用：在事件之间插入固定的时间（毫秒）延迟，你可以使用这个设置来减缓Monkey的运行速度，如果你不指定这个参数，则事件之间将没有延迟，事件将以最快的速度生成。
 
-����adb shell monkey --throttle 300 -v 10
+例：adb shell monkey --throttle 300 -v 10
 
-ע�����ò�����һ������Ϊ300���룬ԭ����ʵ���û����������300��������һ�������¼������Դ˴�һ������Ϊ300���롣
+注：常用参数，一般设置为300毫秒，原因是实际用户操作的最快300毫秒左右一个动作事件，所以此处一般设置为300毫秒。
 
 
-3��--pct-touch <percent>
+3、--pct-touch <percent>
 
-���ã����������¼��İٷֱȡ��������¼���ָ����Ļ�е�һ��down-up�¼���������Ļĳ�����²�̧��Ĳ�����
+作用：调整触摸事件的百分比。（触摸事件是指在屏幕中的一个down-up事件，即在屏幕某处按下并抬起的操作）
 
-����adb shell monkey --pct-touch 100 -v 10
+例：adb shell monkey --pct-touch 100 -v 10
 
-ע�����ò������˲�������Ҫ��Ӧ��ǰ����Ӧ�ó���Ĳ���������һ��Ӧ��80%�Ĳ������Ǵ������ǾͿ��Խ��˲����İٷֱ����ó���Ӧ�ϸߵİٷֱȡ�
+注：常用参数，此参数设置要适应当前被测应用程序的操作，比如一个应用80%的操作都是触摸，那就可以将此参数的百分比设置成相应较高的百分比。
 
 
-4��--pct-motion <percent>
+4、--pct-motion <percent>
 
-���ã�����motion�¼��ٷֱȡ���motion�¼�������Ļ��ĳ��һ��down�¼���һϵ��α������ƶ��¼���һ��up�¼���ɣ�
+作用：调整motion事件百分比。（motion事件是由屏幕上某处一个down事件、一系列伪随机的移动事件和一个up事件组成）
 
-����adb shell monkey --pct-motion 100 -v 10
+例：adb shell monkey --pct-motion 100 -v 10
 
-ע�����ò�������ע������ƶ��¼���ֱ�߻����������trackball�ƶ����������ƶ���
+注：常用参数，需注意的是移动事件是直线滑动，下面的trackball移动包含曲线移动。
 
 
 
-5��--pct-trackball <percent>
+5、--pct-trackball <percent>
 
-���ã������������¼��ٷֱȡ����������¼���һ������������ƶ��¼���ɣ���ʱ������ŵ���¼���
+作用：调整滚动球事件百分比。（滚动球事件由一个或多个随机的移动事件组成，有时会伴随着点击事件）
 
-����adb shell monkey --pct-trackball 100 -v 10
+例：adb shell monkey --pct-trackball 100 -v 10
 
-ע������ʹ�ò����������ֻ�����û�й����򣬵��������¼��а������߻����¼����ڱ��������Ҫ���߻���ʱ����ѡ�ô˲�����
+注：不常使用参数，现在手机几乎没有滚动球，但滚动球事件中包含曲线滑动事件，在被测程序需要曲线滑动时可以选用此参数。
 
 
 
-6��--pct-nav <percent>
+6、--pct-nav <percent>
 
-���ã����������ĵ����¼��ٷֱȡ��������¼��ɷ��������豸���������Ұ������������¼���ɣ�
+作用：调整基本的导航事件百分比。（导航事件由方向输入设备的上下左右按键所触发的事件组成）
 
-����adb shell monkey --pct-nav 100 -v 10
+例：adb shell monkey --pct-nav 100 -v 10
 
 
 
-7��--pct-majornav <percent>
+7、--pct-majornav <percent>
 
-���ã�������Ҫ�����¼��İٷֱȡ�����Щ�����¼�ͨ���ᵼ��UI�����еĶ����¼�����5-way���̵��м�������˰������˵�������
+作用：调整主要导航事件的百分比。（这些导航事件通常会导致UI界面中的动作事件，如5-way键盘的中间键，回退按键、菜单按键）
 
-����adb shell monkey --pct-majornav 100 -v 10
+例：adb shell monkey --pct-majornav 100 -v 10
 
 
 
-8��--pct-syskeys <percent>
+8、--pct-syskeys <percent>
 
-���ã�����ϵͳ�¼��ٷֱȡ�����Щ����ͨ����ϵͳ����ʹ�ã���Home��Back��Start Call��End Call���������ڣ�
+作用：调整系统事件百分比。（这些按键通常由系统保留使用，如Home、Back、Start Call、End Call、音量调节）
 
-����adb shell monkey --pct-syskeys 100 -v 10
+例：adb shell monkey --pct-syskeys 100 -v 10
 
 
 
-9��--pct-appswitch <percent>
+9、--pct-appswitch <percent>
 
-���ã�����Activity�����İٷֱȡ����������ʱ�����У�Monkey��ִ��һ��startActivity()���ã���Ϊ���̶ȸ��Ǳ������ȫ��Activity��һ�ַ�����
+作用：调整Activity启动的百分比。（在随机的时间间隔中，Monkey将执行一个startActivity()调用，作为最大程度覆盖被测包中全部Activity的一种方法）
 
-����adb shell monkey --pct-appswitch 100 -v 5
+例：adb shell monkey --pct-appswitch 100 -v 5
 
 
 
-10��--pct-anyevent
+10、--pct-anyevent
 
-���ã����������¼��İٷֱȡ�����������������¼����簴�����������豸�ϲ����õİ�ť�ȣ�
+作用：调整其他事件的百分比。（这包含所有其他事件，如按键、其他在设备上不常用的按钮等）
 
-����adb shell monkey --pct-anyevent 100 -v 5
+例：adb shell monkey --pct-anyevent 100 -v 5
 
 
-����Լ������
+三、约束条件
 
-1��-p <allowed-package-name>
+1、-p <allowed-package-name>
 
-���ã������ָ��һ����������Monkey��ֻ����������Щ���е�Activity��������Ӧ�ó�����Ҫ������Щ��(��ѡ����ϵ��)�����Activity������Ҫָ����Щ��������㲻ָ���κΰ���Monkey������ϵͳ�������а���Activity��ָ���������ʹ�ö��-p��һ��-p�����һ��������
+作用：如果你指定一个或多个包，Monkey将只允许访问这些包中的Activity。如果你的应用程序需要访问这些包(如选择联系人)以外的Activity，你需要指定这些包。如果你不指定任何包，Monkey将允许系统启动所有包的Activity。指定多个包，使用多个-p，一个-p后面接一个包名。
 
-����adb shell monkey -p com.Android.browser -v 10
+例：adb shell monkey -p com.Android.browser -v 10
 
 
-2��-c <main-category>
-���ã������ָ��һ���������Monkey��ֻ����ϵͳ������Щָ��������г���Activity������㲻ָ���κ����Monkey��ѡ��л��������г���Activity��Intent.CATEGORY_LAUNCHER��Intent.CATEGORY_MONKEY��ָ��������ʹ�ö��-c��ÿ��-cָ��һ�����
+2、-c <main-category>
+作用：如果你指定一个或多个类别，Monkey将只允许系统启动这些指定类别中列出的Activity。如果你不指定任何类别，Monkey将选择谢列类别中列出的Activity，Intent.CATEGORY_LAUNCHER和Intent.CATEGORY_MONKEY。指定多个类别使用多个-c，每个-c指定一个类别。
 
-3��--dbg-no-events
-���ã����ô�ѡ�Monkey��ִ�г�ʼ����������һ������Activity���������ڽ�һ�������¼���Ϊ�˵õ���ѽ������ϲ���-v��һ����������Լ�����Լ�һ������Monkey����30������ʱ��ķ���ֵ���Ӷ��ṩ��һ�����Լ���Ӧ�ó��������õİ�֮��ת���Ļ�����
+3、--dbg-no-events
+作用：设置此选项，Monkey将执行初始启动，进入一个测试Activity，并不会在进一步生成事件。为了得到最佳结果，结合参数-v，一个或多个包的约束，以及一个保持Monkey运行30秒或更长时间的非零值，从而提供了一个可以监视应用程序所调用的包之间转换的环境。
 
 
-4��--hprof
-���ã����ô�ѡ�����Monkey�����¼�����ǰ������profilling���档��data/misc·�������ɴ��ļ���~5Mb��������ҪС��ʹ�á�
+4、--hprof
+作用：设置此选项，将在Monkey生成事件序列前后生成profilling报告。在data/misc路径下生成大文件（~5Mb），所以要小心使用。
 
-5��--ignore-crashes��FC��
-���ã�ͨ����Ӧ�÷����������쳣ʱMonkey��ֹͣ���С�������ô��Monkey�����������¼���ϵͳ��ֱ���¼�������ɡ�
+5、--ignore-crashes（FC）
+作用：通常，应用发生崩溃或异常时Monkey会停止运行。如果设置此项，Monkey将继续发送事件给系统，直到事件计数完成。
 
-6��--ignore-timeouts��ANR��
-���ã�ͨ����Ӧ�ó������κγ�ʱ�����硰Application Not responding���Ի���Monkey��ֹͣ���У����ô��Monkey�����������¼���ϵͳ��ֱ���¼�������ɡ�
+6、--ignore-timeouts（ANR）
+作用：通常，应用程序发生任何超时错误（如“Application Not responding”对话框）Monkey将停止运行，设置此项，Monkey将继续发送事件给系统，直到事件计数完成。
 
-7��--ignore-security-exception 
-���ã�ͨ���������������ɴ�����������һЩ��Ҫ���ɵ�Activity�����µ��쳣ʱ��Monkey��ֹͣ���С����ô��Monkey�����������¼���ϵͳ��ֱ���¼�������ɡ�
+7、--ignore-security-exception 
+作用：通常，当程序发生许可错误（例如启动一些需要许可的Activity）导致的异常时，Monkey将停止运行。设置此项，Monkey将继续发送事件给系统，直到事件计数完成。
 
-8��--kill-process-after-error
-���ã�ͨ������Monkey����һ�������ֹͣʱ��������Ӧ�ó��򽫼�����������״̬�����ô������֪ͨϵͳֹͣ��������Ľ��̡�ע�⣬�������ɹ����Ľ�������û��ֹͣ�����Ľ��̣��豸ֻ���ڽ����¼�֮��򵥵ı���������״̬��
+8、--kill-process-after-error
+作用：通常，当Monkey由于一个错误而停止时，出错的应用程序将继续处于运行状态。设置此项，将会通知系统停止发生错误的进程。注意，正常（成功）的结束，并没有停止启动的进程，设备只是在结束事件之后简单的保持在最后的状态。
 
-9��--monitor-native-crashes
+9、--monitor-native-crashes
 
-���ã����Ӳ�����Andoridϵͳ�б��ش���ı����¼����������--kill-process-after-error��ϵͳ��ֹͣ���С�
+作用：监视并报告Andorid系统中本地代码的崩溃事件。如果设置--kill-process-after-error，系统将停止运行。
 
-10��--wait-dbg
+10、--wait-dbg
 
-���ã�ִֹͣ���е�Monkey��ֱ���е��������������ӡ�
+作用：停止执行中的Monkey，直到有调试器和它相连接。
 
 
-1.ʲô��Monkey��
+1.什么是Monkey？
 
-Monkey��һ�������г��򣬿���������ģ�������豸���У�����ϵͳ����α������û��¼�������������롢�����Ȳ��������Գ������ѹ�����ԡ�
+Monkey是一个命令行程序，可以运行在模拟器或设备当中，它向系统发送伪随机的用户事件流（如键盘输入、触摸等操作），对程序进行压力测试。
 
 
 
-2.Monkey������
+2.Monkey的特征
 
-��1�����ԵĶ����ΪӦ�ó��������һ���ľ����ԣ�
+（1）测试的对象仅为应用程序包，有一定的局限性；
 
-��2��Monkeyʹ�õ��¼���������ģ������Զ��壻
+（2）Monkey使用的事件流是随机的，不能自定义；
 
-��3���ɶ�MonkeyTest�Ķ����¼����������͡�Ƶ�ʽ������á�
+（3）可对MonkeyTest的对象、事件数量、类型、频率进行设置。
 
 
 
-4.Moneky��ֹͣ����
+4.Moneky的停止条件
 
-��1���������н�����
+（1）正常运行结束；
 
-��2��ǿ��ֹͣ��Kill����
+（2）强行停止（Kill）；
 
-��3����Monkeyδʹ��--pct-ignore-timeouts����������£����������ֲ���Ӧ��application not responding���׳�ANR����
+（3）在Monkey未使用--pct-ignore-timeouts参数的情况下，被测程序出现不相应（application not responding，俗称ANR）；
 
-��4����Monkeyδʹ��--pct-ignore-crashs����������£����������ֱ�����FC�����κ�ʧ���쳣��Monkey��ֹͣ��������
+（4）在Monkey未使用--pct-ignore-crashs参数的情况下，被测程序出现崩溃（FC）或任何失控异常，Monkey将停止并报错；
 
-��5������޶�Monkey���е�һ���򼸸��ض��İ��ϣ���ô��������ͼ���е��������Ĳ�������������ֹ��
+（5）如果限定Monkey运行到一个或几个特定的包上，那么它会检测试图运行到其他包的操作，并进行阻止。
+
+查看app的包名和启动activity：aapt dump badging 路径名
+如：aapt dump badging /Users/feidong/Downloas/jw_V4.8.1.1apl
