@@ -248,3 +248,6 @@ Monkey是一个命令行程序，可以运行在模拟器或设备当中，它�
 
 查看app的包名和启动activity：aapt dump badging 路径名
 如：aapt dump badging /Users/feidong/Downloas/jw_V4.8.1.1apl
+
+adb 常用命令
+https://segmentfault.com/a/1190000000426049
