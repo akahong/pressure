@@ -251,3 +251,5 @@ Monkey是一个命令行程序，可以运行在模拟器或设备当中，它�
 
 adb 常用命令
 https://segmentfault.com/a/1190000000426049
+
+adb shell pm list packages -3 显示app应用的package名
